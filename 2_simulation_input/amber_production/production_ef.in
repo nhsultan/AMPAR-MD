@@ -1,0 +1,55 @@
+Production NVT simulation with applied electric field for AMPA receptors
+ &cntrl
+    ! --- General Setup ---
+    imin=0,        ! No minimization
+    irest=1,       ! Restart from previous MD simulation
+    ntx=5,         ! Read coordinates and velocities from restart file
+
+    ! --- Temperature Control ---
+    ntt=3,         ! Langevin dynamics
+    gamma_ln=1.0,  ! Collision frequency / friction coefficient (ps^-1)
+    temp0=303.15,  ! Target temperature (K)
+
+    ! --- Nonbonded / Potential Energy Control ---
+    cut=12.0,      ! Nonbonded cutoff distance (Angstroms)
+    fswitch=10.0,  ! Force-based switching distance
+
+    ! --- MD Settings ---
+    nstlim=500000, ! Number of MD steps (1 ns total)
+    dt=0.002,      ! Time step (2 fs)
+    ntb=1,         ! Periodic boundaries for constant volume
+
+    ! --- External Electric Field ---
+    efz=-0.11,     ! Applied electric field in the Z-direction
+
+    ! --- SHAKE (Bond Constraints) ---
+    ntc=2,         ! Constrain bonds containing hydrogen
+    ntf=2,         ! Do not calculate forces of bonds containing hydrogen
+
+    ! --- Output / Trajectory Writing ---
+    ntpr=1000,     ! Print energy info every 1000 steps
+    ntwx=50000,    ! Print coordinates to trajectory every 50000 steps
+    ntwr=10000,    ! Print restart file every 10000 steps
+!   ntwv=-1,       ! Uncomment to also print velocities to trajectory
+!   ntwf=-1,       ! Uncomment to also print forces to trajectory
+    ntxo=2,        ! Write restart in NetCDF format
+    ioutfm=1,      ! Write trajectory in NetCDF format
+    iwrap=1,       ! Wrap coordinates into the primary box
+
+    ! --- Pressure Control ---
+    ntp=0,         ! No pressure scaling (NVT ensemble due to applied electric field)
+    pres0=1.0,     ! Target external pressure (bar)
+!   barostat=2,    ! MC barostat (change to 1 for Berendsen)
+!   csurften=3,    ! Interfaces in 3=xy plane (1=yz, 2=xz)
+!   gamma_ten=0.0, ! Surface tension (dyne/cm). 0 gives pure semi-iso scaling
+!   ninterface=2,  ! Number of interfaces (2 for bilayer)
+
+    ! --- SETTLE Algorithm Parameters ---
+    watnam='WAT',  ! Water residues are named WAT
+    owtnm='O',     ! Water oxygens are named O
+    ntave=0,       ! Do not calculate time-averaged trajectory data
+ /
+
+ &ewald
+    vdwmeth=0,
+ /

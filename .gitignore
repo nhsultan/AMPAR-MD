@@ -1,0 +1,8 @@
+# Ignore MD trajectory and restart files
+*.nc
+*.rst
+
+# Ignore Python cache and OS hidden files
+__pycache__/
+*.pyc
+.DS_Store
